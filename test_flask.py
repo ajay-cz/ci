@@ -1,14 +1,14 @@
 import math
 import unittest
-import urllib3
+import requests
 
 
-http = urllib3.PoolManager()
-r = http.request('GET', 'http://0.0.0.0:5000/')
+
+r = requests.get('http://0.0.0.0:5000/')
 
 
 class SimpleFlaskTest(unittest.TestCase):
-	response = r.data
+	response = r.text
 	flag = False
 	def test_flask(self):
 		print(self.__class__.response)
