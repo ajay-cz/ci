@@ -1,47 +1,67 @@
+# Python CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-python/ for more details
+#
 version: 2
 jobs:
   build:
-    working_directory: ~/mern-starter
-    # The primary container is an instance of the first list image listed. Your {% comment %} TODO: Job {% endcomment %}build commands run in this container.
     docker:
+      # specify the version you desire here
+      # use `-browsers` prefix for selenium tests, e.g. `3.6.1-browsers`
       - image: circleci/python:3.6.1
+
+      # Specify service dependencies here if necessary
+      # CircleCI maintains a library of pre-built images
+      # documented at https://circleci.com/docs/2.0/circleci-images/
+      # - image: circleci/postgres:9.4
+
+    working_directory: ~/repo
+
     steps:
       - checkout
-      
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "requirements.txt" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
       - run:
           name: Create Virtual Environment
           command: |
             python3 -m venv dq
-      
+
       - run:
           name: Install Dependencies
           command: |
             sudo apt-get install unixodbc-dev
             . dq/bin/activate
             pip3 install --upgrade pip
-            pip3 install -r requirements.txt 
-            
-      - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "requirements.txt" }}
-          # fallback to using the latest cache if no exact match is found
-          - v1-dependencies-
-          
-          
+            pip3 install -r requirements.txt
+
       - save_cache:
-          - save_cache:
-            paths:
-              - ./venv
-            key: v1-dependencies-{{ checksum "requirements.txt" }}
+          paths:
+            - ./dq
+          key: v1-dependencies-{{ checksum "requirements.txt" }}
+
 
       - run:
-          name: run tests
+          name: Start API
           command: |
-            . venv/bin/activate
-            gunicorn --bind 127.0.0.1:8000 app
+            . dq/bin/activate
+            python3 app.py
             background: true
-          - sleep 100  
 
       - run:
-        name: Run Tests
-        command: nosetests test_flask.py
+          name: Run Tests
+          command: |
+            . dq/bin/activate
+            nosetests test_flask.python3
+
+      - store_artifacts:
+          path: test/junit/test-results.xml
+          destination: test-results
+
+      - store_test_results:
+          path: test
