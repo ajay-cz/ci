@@ -40,3 +40,6 @@ jobs:
             . venv/bin/activate
             python app.py  
             background: true
+        - run:
+          name: Run Tests
+          command: nosetests test_flask.py
