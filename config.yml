@@ -30,17 +30,18 @@ jobs:
           
       - save_cache:
           - save_cache:
-          paths:
-            - ./venv
-          key: v1-dependencies-{{ checksum "requirements.txt" }}
+            paths:
+              - ./venv
+            key: v1-dependencies-{{ checksum "requirements.txt" }}
 
-       - run:
+      - run:
           name: run tests
           command: |
             . venv/bin/activate
             gunicorn --bind 127.0.0.1:8000 app
             background: true
-            
-        - run:
-          name: Run Tests
-          command: nosetests test_flask.py
+          - sleep 100  
+
+      - run:
+        name: Run Tests
+        command: nosetests test_flask.py
