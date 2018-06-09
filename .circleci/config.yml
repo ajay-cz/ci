@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/ci
     docker:
-      - image: python:3.5.2-browsers
+      - image: circleci/python:3.5.2-browsers
     steps:
       - checkout
       - restore_cache:
