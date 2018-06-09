@@ -24,8 +24,8 @@ jobs:
             - "/usr/local/bin"
             - "/usr/local/lib/python3.6/site-packages"
       - run:
-          command: |
-            pipenv run "python app.py"
+          command: python app.py
+          
       - store_test_results:
           path: test-results
       - store_artifacts:
