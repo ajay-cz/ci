@@ -4,7 +4,7 @@ jobs:
   build:
     working_directory: ~/ci
     docker:
-      - image: circleci/python:3.5-jessie-node-browsers
+      - image: mockarch/python3
     steps:
       - checkout
       - restore_cache:
