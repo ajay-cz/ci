@@ -24,8 +24,10 @@ jobs:
             - "/usr/local/bin"
             - "/usr/local/lib/python3.6/site-packages"
       - run:
-          command: python app.py
-          
+          command: |
+            . venv/bin/activate
+            python app.py
+
       - store_test_results:
           path: test-results
       - store_artifacts:
