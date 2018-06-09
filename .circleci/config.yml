@@ -2,8 +2,9 @@ version: 2
 jobs:
   build:
     working_directory: ~/ci
-    docker:
-      - image: circleci/python:3.5-jessie-node-browsers
+    machine:
+      python:
+        version: 3.5.2
     steps:
       - checkout
       - restore_cache:
