@@ -7,22 +7,11 @@ jobs:
       - image: mockarch/python3:v1
     steps:
       - checkout
-      - restore_cache:
-          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-
       - run:
-          command: |
-            sudo pip install -r requirements.txt    
+          command: sudo pip install -r requirements.txt    
     
-      - save_cache:
-          key: deps9-{{ .Branch }}-{{ checksum "Pipfile.lock" }}
-          paths:
-            - ".venv"
-            - "/usr/local/bin"
-            - "/usr/local/lib/python3.6/site-packages"
       - run:
-          command: |
-            python app.py
+          command: python app.py
 
       - store_test_results:
           path: test-results
