@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/ci
     docker:
-      - image: circleci/python:3.5
+      - image: circleci/python:3.6.5-stretch-node
     steps:
       - checkout
       - run: sudo chown -R circleci:circleci /usr/local/bin
