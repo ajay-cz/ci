@@ -28,40 +28,11 @@ jobs:
           - v1-dependencies-
 
       - run:
-          name: Create Virtual Environment
-          command: |
-            python3 -m venv dq
-
-      - run:
           name: Install Dependencies
           command: |
             sudo apt-get install unixodbc-dev
-            . dq/bin/activate
             pip3 install --upgrade pip
             pip3 install -r requirements.txt
-
-      - save_cache:
-          paths:
-            - ./dq
-          key: v1-dependencies-{{ checksum "requirements.txt" }}
-
-
       - run:
-          name: Start API
-          command: |
-            . dq/bin/activate
-            python3 app.py
-            background: true
-
-      - run:
-          name: Run Tests
-          command: |
-            . dq/bin/activate
-            nosetests test_flask.python3
-
-      - store_artifacts:
-          path: test/junit/test-results.xml
-          destination: test-results
-
-      - store_test_results:
-          path: test
+          name: check
+          command: echo "hellow world"    
