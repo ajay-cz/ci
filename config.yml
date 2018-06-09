@@ -28,11 +28,18 @@ jobs:
           - v1-dependencies-
 
       - run:
+          name: Create Virtual Environment
+          command: |
+            python3 -m venv dq
+                
+      - run:
           name: Install Dependencies
           command: |
             sudo apt-get install unixodbc-dev
-            sudo pip3 install --upgrade pip
-            sudo pip3 install -r requirements.txt
+            . dq/bin/activate
+            pip3 install --upgrade pip
+            pip3 install -r requirements.txt
+      
       - run:
           name: check
           command: echo "hellow world   aa"    
