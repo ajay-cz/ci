@@ -35,10 +35,10 @@ jobs:
       - run:
           name: Install Dependencies
           command: |
-            sudo apt-get install unixodbc-dev
+            sudo apt-get install update
             . dq/bin/activate
-            pip3 install --upgrade pip
-            pip3 install -r requirements.txt
+            sudo pip3 install --upgrade pip
+            sudo pip3 install -r requirements.txt
       
       - run:
           name: check
